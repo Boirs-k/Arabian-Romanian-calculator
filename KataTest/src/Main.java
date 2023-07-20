@@ -58,12 +58,21 @@ public class Main {
 
         String[] workString = input.split("[+-/*]");
 
-        if (isRomanian) {
-            workNumber1 = (byte) Arrays.stream(roman).toList().indexOf(workString[0].trim());
-            workNumber2 = (byte) Arrays.stream(roman).toList().indexOf(workString[1].trim());
-        } else {
-            workNumber1 = Byte.parseByte(workString[0].trim());
-            workNumber2 = Byte.parseByte(workString[1].trim());
+        if (workString.length > 2) {
+            throw new Exception("Пример составлен некооректно, возможно слишком много операционных знаков!");
+        }
+
+
+        try {
+            if (isRomanian) {
+                workNumber1 = (byte) Arrays.stream(roman).toList().indexOf(workString[0].trim());
+                workNumber2 = (byte) Arrays.stream(roman).toList().indexOf(workString[1].trim());
+            } else {
+                workNumber1 = Byte.parseByte(workString[0].trim());
+                workNumber2 = Byte.parseByte(workString[1].trim());
+            }
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("Неверный формат введенных данных!");
         }
 
         if ((workNumber1 > 0 && workNumber1 <= 10) && (workNumber2 > 0 && workNumber2 <= 10)) {
@@ -85,7 +94,7 @@ public class Main {
             if (result > 0) {
                 System.out.println(roman[result]);
             } else {
-                throw new Exception("Значение не может быть меньше единицы!");
+                throw new Exception("Значение в выражении из римских чисел не может быть меньше единицы!");
             }
         } else {
             System.out.println(result);
